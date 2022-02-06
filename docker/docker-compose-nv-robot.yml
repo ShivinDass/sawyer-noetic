@@ -4,24 +4,24 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.nvidia
-    image: gym-sawyer-noetic/nvidia
+    image: sawyer-noetic/nvidia
   nvidia-ros-intera:
     build:
       context: .
       dockerfile: Dockerfile.ros_intera
       args:
-        - PARENT_IMAGE=gym-sawyer-noetic/nvidia
-    image: gym-sawyer-noetic/nvidia-ros-intera
+        - PARENT_IMAGE=sawyer-noetic/nvidia
+    image: sawyer-noetic/nvidia-ros-intera
   nvidia-ros-moveit:
     build:
       context: .
       dockerfile: Dockerfile.moveit
       args:
-        - PARENT_IMAGE=gym-sawyer-noetic/nvidia-ros-intera
-    image: gym-sawyer-noetic/nvidia-ros-moveit
+        - PARENT_IMAGE=sawyer-noetic/nvidia-ros-intera
+    image: sawyer-noetic/nvidia-ros-moveit
   nvidia-sawyer-robot:
     build:
       context: ./sawyer-robot
       args:
-        - PARENT_IMAGE=gym-sawyer-noetic/nvidia-ros-moveit
-    image: gym-sawyer-noetic/nvidia-sawyer-robot
+        - PARENT_IMAGE=sawyer-noetic/nvidia-ros-moveit
+    image: sawyer-noetic/nvidia-sawyer-robot

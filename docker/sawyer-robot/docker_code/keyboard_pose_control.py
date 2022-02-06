@@ -9,7 +9,6 @@ from math import tau
 import tf
 import numpy as np
 
-print("ABSDDIUDUBDBDUBUBUBDUDB")
 def addTable(scene):
 
 	box_pose = geometry_msgs.msg.PoseStamped()
@@ -92,8 +91,8 @@ rospy.init_node("moveit_python_interface", anonymous=False)
 
 robot = moveit_commander.RobotCommander()
 scene = moveit_commander.PlanningSceneInterface(synchronous=True)
-
 move_group = moveit_commander.MoveGroupCommander("right_arm")
+
 move_group.set_max_velocity_scaling_factor(0.3)
 move_group.set_max_acceleration_scaling_factor(0.3)
 

@@ -6,7 +6,6 @@ COPY intera.sh /root/ros_ws/intera.sh
 
 # Install and Build Sawyer Moveit Repo. Instructions obtained from:
 # http://sdk.rethinkrobotics.com/intera/MoveIt_Tutorial
-
 RUN ["/bin/bash", "-c", \
   "cd ~/ros_ws/src && \
   wstool merge https://raw.githubusercontent.com/RethinkRobotics/sawyer_moveit/master/sawyer_moveit.rosinstall && \
@@ -16,8 +15,6 @@ RUN ["/bin/bash", "-c", \
   catkin build -j6"]
 
 WORKDIR /root/code/
-#COPY /examples /root/code/
-
 COPY docker-entrypoint.sh /root/
 COPY sawyer-robot.launch /root/
 COPY multiple_cam.launch /root/
