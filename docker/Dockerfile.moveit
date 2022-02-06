@@ -1,0 +1,35 @@
+ARG PARENT_IMAGE=ubuntu:20.04
+FROM $PARENT_IMAGE
+
+# Install MoveIt!
+#RUN DEBIAN_FRONTEND=noninteractive apt update && apt -y install \
+#  ros-noetic-moveit
+
+RUN rosdep update
+RUN apt -qy update
+RUN apt -qy dist-upgrade
+
+RUN apt -qy install ros-noetic-catkin python3-catkin-tools python3-osrf-pycommon
+
+RUN mkdir -p /root/ros_ws/src
+
+#RUN ["/bin/bash", "-c", \
+#  "source /opt/ros/noetic/setup.bash && \
+#  cd /root/ros_ws && \
+#  catkin build -j2"]
+
+RUN /bin/bash -c 'cd /root/ros_ws/src && \
+		wstool init . && \
+		wstool merge -t . https://raw.githubusercontent.com/ros-planning/moveit/master/moveit.rosinstall && \
+		wstool remove moveit_tutorials && \
+		wstool update -t . && \
+		git clone https://github.com/ros-planning/moveit_tutorials.git -b master'
+
+RUN /bin/bash -c 'cd /root/ros_ws/src && \
+		rosdep install -y --from-paths . --ignore-src --rosdistro noetic'
+
+
+RUN /bin/bash -c 'cd /root/ros_ws && \
+		source /opt/ros/noetic/setup.bash && \
+		catkin config --extend /opt/ros/${ROS_DISTRO} --cmake-args -DCMAKE_BUILD_TYPE=Release && \
+		catkin build -j6'

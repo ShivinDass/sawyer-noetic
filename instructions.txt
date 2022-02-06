@@ -1,0 +1,70 @@
+How to run sawyer robot container:
+step 1:
+#set ip and hostname
+export SAWYER_HOSTNAME=021707CP00056.local
+export WORKSTATION_IP=192.168.33.8
+export SAWYER_IP=192.168.33.7
+
+step 2:
+#Build image(if required)
+make build-nvidia-sawyer-robot
+
+step 3:
+#Run docker container. Opens Rviz with moveit
+make run-nvidia-sawyer-robot
+
+step 4:
+#Enter into container terminal
+docker exec -it sawyer-robot bash
+#After this we can cd into root/ros_ws and execute the intera.sh file to run commands on sawyer
+
+Step 5:
+#To terminate image
+(sudo) docker stop sawyer-robot
+
+####################################################################
+How to run script in garage:
+step 1:
+#set ip as before
+#IMPORTANT TO RUN THIS BEFORE EXECUTING THE MAKE COMMAND
+
+step 2:
+#Run garage and python script
+make run-garage-nvidia-ros
+
+step 3:
+#Go to code directory
+cd ~/code/gym_sawyer/examples
+
+step 4:
+#Run code
+python hello_world_sawyer.py
+
+step 5:
+#When opening another shell, run the following
+export SAWYER_HOSTNAME=021707CP00056.local
+export WORKSTATION_IP=192.168.33.8
+export SAWYER_IP=192.168.33.7
+source activate garage
+export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libGLEW.so
+export TF_CPP_MIN_LOG_LEVEL=3
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${HOME}/.mujoco/mjpro150/bin"
+export ROS_MASTER_URI=http://021707CP00056.local:11311
+
+source /opt/ros/noetic/setup.bash
+source /root/ros_ws/devel/setup.bash
+cd ~/ros_ws
+./intera.sh
+cd ~/code/
+
+#The source commands in entrypoint initializes the correct environment to run the script. bash command, to open interactive shell with garage container is not working, otherwise we don't have to run ./intera.sh. We can run the sawyer robot docker in another container and just run garage container with the code(but right now the interfacing with the sawyer can happen from one container itself). If/when you want to remove ./intera.sh stuff, remember to export ROS_MASTER_URI in entrypoint
+
+Sawyer names:-
+- base_link/planning_frame = base
+- robot.get_group_names() = ['right_arm']
+- ee_link = right_gripper_tip
+
+
+
+Updates:-
+Using both containers separately(as in the gym_sawyer README) is working now for some reason
