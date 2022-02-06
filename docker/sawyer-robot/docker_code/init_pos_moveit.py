@@ -13,6 +13,9 @@ robot = moveit_commander.RobotCommander()
 scene = moveit_commander.PlanningSceneInterface(synchronous=True)
 move_group = moveit_commander.MoveGroupCommander("right_arm")
 
+move_group.set_max_velocity_scaling_factor(0.3)
+move_group.set_max_acceleration_scaling_factor(0.3)
+
 box_pose = geometry_msgs.msg.PoseStamped()
 box_pose.header.frame_id = "base"
 box_pose.pose.position.x = 1.0
