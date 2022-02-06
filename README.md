@@ -30,8 +30,8 @@ Now you can access all the functionalities of ros-noetic, moveit and intera_inte
 
 ## Utility Code
 
-There is some utility code available in `docker/sawyer-robot/docker_code/`. The following can be run after navigatiing to `/root/code/` inside the docker containder shell,
-- Run `python3 init_pos.moveit.py` to set Sawyer in its initial position
+There is some utility code available in `docker/sawyer-robot/docker_code/`. The following can be run after navigating to `/root/code/` inside the docker container shell,
+- Run `python3 init_pos_moveit.py` to set Sawyer in its initial position
 - Run `python3 keyboard_pose_control.py` for collision-aware end-effector keyboard control in cartesian coordinates. For joint space keyboard control, intera also has a utility which can be run by `rosrun intera_examples joint_position_keyboard.py` although this is not collision-aware.
 - Run `python3 camera_show.py` to access the camera input
 
